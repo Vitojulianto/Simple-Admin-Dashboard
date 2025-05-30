@@ -1,12 +1,10 @@
-# React + Vite
+**Admin Dashboard**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+i created this simple admin dashboard which has:
+-Dashboard session : i use useContext to track how many users, products, and customers in the dahsboaord
+-User session : we can add and i put the swal/notification popup effect, and we can filter the user based on the name, role
+-Products session: almost the same as user session but the filter is based on price and name
+-Customer session: Basically the same as user
+-Calender page
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+I use react, tailwindcss to make this simple admin dashboard
