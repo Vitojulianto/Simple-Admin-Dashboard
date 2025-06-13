@@ -81,7 +81,7 @@ const Users = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-6 text-black">
-      <h2 className="text-3xl font-semibold text-center">User Management</h2>
+      <h2 className="text-3xl font-semibold text-center text-white">User Management</h2>
 
       {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="bg-white shadow rounded-lg p-5">
@@ -135,7 +135,7 @@ const Users = () => {
         <input
           {...register("searchTerm")}
           type="text"
-          className="flex-1 min-w-[200px] border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+          className="flex-1 min-w-[200px] border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400 text-black bg-white"
           placeholder="Search by name or email..."
         />
         <select
