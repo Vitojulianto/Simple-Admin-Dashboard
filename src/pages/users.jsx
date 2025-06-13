@@ -20,7 +20,6 @@ const Users = () => {
     defaultValues: { name: "", email: "", role: "", id: null },
   });
 
-  // **Key di localStorage sekarang 'users' sehingga tidak bentrok dengan session-login**
   const [users, setUsers] = useState(() => {
     const stored = localStorage.getItem("users");
     try {
@@ -68,7 +67,7 @@ const Users = () => {
     )
     .filter((u) => (filterRole === "all" ? true : u.role === filterRole));
 
-  // pagination
+  // Pagination logic
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 10;
   const offset = currentPage * itemsPerPage;
@@ -81,7 +80,7 @@ const Users = () => {
   }, [users]);
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-6">
+    <div className="max-w-5xl mx-auto p-6 space-y-6 text-black">
       <h2 className="text-3xl font-semibold text-center">User Management</h2>
 
       {/* Form */}
@@ -92,7 +91,7 @@ const Users = () => {
             className="flex-1 min-w-[200px] border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
             placeholder="Name"
           />
-          {errors.name && <span className="text-red-500">{errors.name.message}</span>}
+          {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
 
           <input
             {...register("email", {
@@ -105,7 +104,7 @@ const Users = () => {
             className="flex-1 min-w-[200px] border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
             placeholder="Email"
           />
-          {errors.email && <span className="text-red-500">{errors.email.message}</span>}
+          {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
 
           <select
             {...register("role", { required: "Role is required" })}
@@ -118,7 +117,7 @@ const Users = () => {
               </option>
             ))}
           </select>
-          {errors.role && <span className="text-red-500">{errors.role.message}</span>}
+          {errors.role && <span className="text-red-500 text-sm">{errors.role.message}</span>}
 
           <input type="hidden" {...register("id")} />
 
@@ -169,6 +168,7 @@ const Users = () => {
         onPageChange={setCurrentPage}
       />
     </div>
-);
-}
+  );
+};
+
 export default Users;
