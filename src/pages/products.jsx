@@ -87,7 +87,7 @@ const Products = () => {
   }, [products]);
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-6">
+    <div className="max-w-5xl mx-auto p-6 space-y-6 text-black">
       <h2 className="text-3xl font-semibold text-center text-white">Product Management</h2>
 
       {/* Form */}
