@@ -20,7 +20,6 @@ const Products = () => {
     defaultValues: { name: "", price: "", image: "", category: "", id: null },
   });
 
-  // State products, ambil dari localStorage (key="products")
   const [products, setProducts] = useState(() => {
     const stored = localStorage.getItem("products");
     try {
@@ -33,7 +32,6 @@ const Products = () => {
 
   const { setTotalProduct, addLog } = useContext(DashboardContext);
 
-  // Submit tambah/update
   const onSubmit = (data) => {
     if (data.id) {
       setProducts(products.map((p) => (p.id === data.id ? data : p)));
@@ -48,33 +46,24 @@ const Products = () => {
     reset({ name: "", price: "", image: "", category: "", id: null });
   };
 
-  // Delete
   const handleDelete = (id) => {
     const deleted = products.find((p) => p.id === id);
     setProducts(products.filter((p) => p.id !== id));
     if (deleted) addLog(`Deleted Product: ${deleted.name}`);
   };
 
-  // Edit → populate form
   const handleEdit = (p) => {
     Object.keys(p).forEach((k) => setValue(k, p[k]));
     addLog(`Editing Product: ${p.name}`);
   };
 
-  // Filters
   const search = watch("searchTerm") || "";
   const filterCategory = watch("filterCategory") || "all";
   const priceRange = watch("priceRange") || "all";
 
-  // Filtered array
   const filtered = products
-    // filter by name
-    .filter((p) =>
-      p.name.toLowerCase().includes(search.toLowerCase())
-    )
-    // filter by price range
+    .filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))
     .filter((p) => {
-      // pastikan kita bekerja dengan string
       const priceStr = String(p.price).replace(/\./g, "");
       const price = parseInt(priceStr, 10) || 0;
       if (priceRange === "low") return price < 100000;
@@ -82,12 +71,8 @@ const Products = () => {
       if (priceRange === "high") return price > 500000;
       return true;
     })
-    // filter by category
-    .filter((p) =>
-      filterCategory === "all" ? true : p.category === filterCategory
-    );
+    .filter((p) => (filterCategory === "all" ? true : p.category === filterCategory));
 
-  // Pagination
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 10;
   const currentItems = filtered.slice(
@@ -96,7 +81,6 @@ const Products = () => {
   );
   const pageCount = Math.ceil(filtered.length / itemsPerPage);
 
-  // sync to localStorage & dashboard count
   useEffect(() => {
     localStorage.setItem("products", JSON.stringify(products));
     setTotalProduct(products.length);
@@ -104,34 +88,29 @@ const Products = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-6">
-      <h2 className="text-3xl font-semibold text-center">Product Management</h2>
+      <h2 className="text-3xl font-semibold text-center text-white">Product Management</h2>
 
       {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="bg-white shadow rounded-lg p-6">
         <div className="flex flex-wrap items-center gap-4">
           <input
             {...register("name", { required: "Name is required" })}
-            className="flex-1 min-w-[180px] border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+            className="flex-1 min-w-[180px] border-gray-300 rounded px-3 py-2 border"
             placeholder="Name"
           />
-          {errors.name && <span className="text-red-500">{errors.name.message}</span>}
-
           <input
             {...register("price", { required: "Price is required" })}
-            className="flex-1 min-w-[120px] border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+            className="flex-1 min-w-[120px] border-gray-300 rounded px-3 py-2 border"
             placeholder="Price"
           />
-          {errors.price && <span className="text-red-500">{errors.price.message}</span>}
-
           <input
             {...register("image")}
-            className="flex-1 min-w-[180px] border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+            className="flex-1 min-w-[180px] border-gray-300 rounded px-3 py-2 border"
             placeholder="Image URL"
           />
-
           <select
             {...register("category", { required: "Category is required" })}
-            className="border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+            className="border-gray-300 rounded px-3 py-2 border"
           >
             <option value="" disabled>Category</option>
             {categoryOptions.map((c) => (
@@ -140,14 +119,8 @@ const Products = () => {
               </option>
             ))}
           </select>
-          {errors.category && <span className="text-red-500">{errors.category.message}</span>}
-
           <input type="hidden" {...register("id")} />
-
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition"
-          >
+          <button type="submit" className="bg-blue-600 text-white px-5 py-2 rounded">
             {watch("id") ? "Update" : "Add"} Product
           </button>
         </div>
@@ -157,13 +130,10 @@ const Products = () => {
       <div className="flex flex-wrap items-center gap-4">
         <input
           {...register("searchTerm")}
-          className="flex-1 min-w-[200px] border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+          className="flex-1 min-w-[200px] border-gray-300 rounded px-3 py-2 border text-black bg-white"
           placeholder="Search by name..."
         />
-        <select
-          {...register("priceRange")}
-          className="border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
-        >
+        <select {...register("priceRange")} className="border-gray-300 rounded px-3 py-2 border">
           <option value="all">All Prices</option>
           <option value="low">Below 100.000</option>
           <option value="medium">100.000–500.000</option>
@@ -171,7 +141,7 @@ const Products = () => {
         </select>
         <select
           {...register("filterCategory")}
-          className="border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+          className="border-gray-300 rounded px-3 py-2 border"
         >
           <option value="all">All Categories</option>
           {categoryOptions.map((c) => (
