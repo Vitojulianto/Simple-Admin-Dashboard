@@ -15,7 +15,7 @@ const Customers = () => {
     reset,
     setValue,
     watch,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
     defaultValues: { name: "", email: "", country: "", gender: "", id: null },
   });
@@ -67,7 +67,6 @@ const Customers = () => {
     )
     .filter((c) => (filterGender === "all" ? true : c.gender === filterGender));
 
-  // pagination
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 10;
   const currentItems = filtered.slice(
@@ -83,18 +82,16 @@ const Customers = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-6">
-      <h2 className="text-3xl font-semibold text-center">Customer Management</h2>
+      <h2 className="text-3xl font-semibold text-center text-white">Customer Management</h2>
 
       {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="bg-white shadow rounded-lg p-5">
         <div className="flex flex-wrap items-center gap-4">
           <input
             {...register("name", { required: "Name is required" })}
-            className="flex-1 min-w-[180px] border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+            className="flex-1 min-w-[180px] border-gray-300 rounded px-3 py-2 border"
             placeholder="Name"
           />
-          {errors.name && <span className="text-red-500">{errors.name.message}</span>}
-
           <input
             {...register("email", {
               required: "Email is required",
@@ -103,20 +100,17 @@ const Customers = () => {
                 message: "Invalid email",
               },
             })}
-            className="flex-1 min-w-[200px] border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+            className="flex-1 min-w-[200px] border-gray-300 rounded px-3 py-2 border"
             placeholder="Email"
           />
-          {errors.email && <span className="text-red-500">{errors.email.message}</span>}
-
           <input
             {...register("country")}
-            className="flex-1 min-w-[160px] border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+            className="flex-1 min-w-[160px] border-gray-300 rounded px-3 py-2 border"
             placeholder="Country"
           />
-
           <select
             {...register("gender", { required: "Gender is required" })}
-            className="border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+            className="border-gray-300 rounded px-3 py-2 border"
           >
             <option value="" disabled>Gender</option>
             {genderOptions.map((g) => (
@@ -125,13 +119,10 @@ const Customers = () => {
               </option>
             ))}
           </select>
-          {errors.gender && <span className="text-red-500">{errors.gender.message}</span>}
-
           <input type="hidden" {...register("id")} />
-
           <button
             type="submit"
-            className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white px-5 py-2 rounded"
           >
             {watch("id") ? "Update" : "Add"} Customer
           </button>
@@ -143,12 +134,12 @@ const Customers = () => {
         <input
           {...register("searchTerm")}
           type="text"
-          className="flex-1 min-w-[200px] border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+          className="flex-1 min-w-[200px] border-gray-300 rounded px-3 py-2 border text-black bg-white"
           placeholder="Search by name or email..."
         />
         <select
           {...register("filterGender")}
-          className="border-gray-300 rounded px-3 py-2 border focus:ring-2 focus:ring-blue-400"
+          className="border-gray-300 rounded px-3 py-2 border"
         >
           <option value="all">All Genders</option>
           {genderOptions.map((g) => (
@@ -176,6 +167,7 @@ const Customers = () => {
         onPageChange={setCurrentPage}
       />
     </div>
-);
-}
+  );
+};
+
 export default Customers;
